@@ -87,11 +87,10 @@ Crunchyroll is a full-stack anime streaming platform inspired by Crunchyroll. It
 - Redis (optional for queues)
 - Laravel WebSockets or Pusher
 
-## 6. Non-Requirements (Future Scope)
+## 6. Non-Requirements (Bonus)
 
-- Premium subscriptions/payment integration
-- AI-based recommendations
-- Community chat/forums
+- Deployment:Laravel Forge
+- FFmpeg (for transcoding video)
 - Docker setup
 
 ## 7. Use Case Flows
