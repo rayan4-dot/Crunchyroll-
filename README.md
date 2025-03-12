@@ -74,7 +74,6 @@ Crunchyroll is a full-stack anime streaming platform inspired by Crunchyroll. It
 | Database       | MySQL or PostgreSQL               |
 | Authentication | Laravel Sanctum or Auth0          |
 | Subtitles      | Stored in .srt or .vtt formats    |
-| Deployment     | Laravel Forge                     |
 
 ## 5. Requirements
 
