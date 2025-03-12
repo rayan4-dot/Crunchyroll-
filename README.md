@@ -68,11 +68,11 @@ Crunchyroll is a full-stack anime streaming platform inspired by Crunchyroll. It
 
 | Layer          | Technology                         |
 |----------------|-----------------------------------|
-| Backend        | Laravel (REST API)                |
-| Frontend       | Blade, TailwindCSS, JavaScript    |
-| Real-time      | Laravel WebSockets, Pusher        |
+| Backend        | Laravel / REST API                |
+| Frontend       | Blade                             |
+| Real-time      | Laravel WebSockets                |
 | Database       | MySQL or PostgreSQL               |
-| Authentication | Laravel Sanctum or Auth0          |
+| Authentication | Laravel Sanctum                   |
 | Subtitles      | Stored in .srt or .vtt formats    |
 
 ## 5. Requirements
@@ -82,7 +82,7 @@ Crunchyroll is a full-stack anime streaming platform inspired by Crunchyroll. It
 - MySQL/PostgreSQL
 - Node.js & NPM
 - Redis (optional for queues)
-- Laravel WebSockets or Pusher
+- Laravel WebSockets 
 
 ## 6. Non-Requirements (Bonus)
 
