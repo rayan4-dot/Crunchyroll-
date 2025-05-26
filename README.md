@@ -1,4 +1,4 @@
-# Crunchyroll
+# WeebNation
 
 
 
@@ -7,7 +7,7 @@
 
 ## 1. Project Overview
 
-Crunchyroll is a full-stack anime streaming platform inspired by Crunchyroll. It allows users to browse, stream, and download anime content. Users can track their activities (favorites, watch later, continue watching), toggle between subbed and dubbed versions, and receive real-time notifications about new episodes. Authenticated users can request to become uploaders, and admins oversee approvals and platform management.
+WeebNation is a full-stack anime streaming platform inspired by WeebNation. It allows users to browse, stream, and download anime content. Users can track their activities (favorites, watch later, continue watching), toggle between subbed and dubbed versions, and receive real-time notifications about new episodes. Authenticated users can request to become uploaders, and admins oversee approvals and platform management.
 
 ## 2. Key Features
 
