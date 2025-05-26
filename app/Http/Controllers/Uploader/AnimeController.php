@@ -186,8 +186,9 @@ class AnimeController extends Controller
                 ]);
 
                 // Store subtitle if provided
-                if (isset($episodeData['subtitle_file'])) {
-                    $subtitlePath = $episodeData['subtitle_file']->store('subtitles', 'public');
+                if ($request->hasFile("episodes.{$index}.subtitle_file")) {
+                    $subtitleFile = $request->file("episodes.{$index}.subtitle_file");
+                    $subtitlePath = $subtitleFile->store('subtitles', 'public');
                     
                     Subtitle::create([
                         'episode_id' => $episode->id,

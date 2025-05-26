@@ -118,4 +118,8 @@ Route::middleware(['auth', 'role:uploader'])->prefix('uploader')->name('uploader
 Route::get('/episodes/{episode}/stream', [App\Http\Controllers\EpisodeController::class, 'stream'])
     ->name('episodes.stream');
 
+// Subtitle streaming route
+Route::get('/subtitles/{subtitle}/stream', [App\Http\Controllers\SubtitleController::class, 'stream'])
+    ->name('subtitles.stream');
+
 require __DIR__.'/auth.php';

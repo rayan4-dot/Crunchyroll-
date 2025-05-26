@@ -27,9 +27,13 @@ export default function AddEpisodes({ anime }) {
             formData.append(`episodes[${index}][season]`, episode.season);
             formData.append(`episodes[${index}][episode_number]`, episode.episode_number);
             formData.append(`episodes[${index}][language]`, episode.language);
+            
+            // Handle video file
             if (episode.video_file) {
                 formData.append(`episodes[${index}][video_file]`, episode.video_file);
             }
+            
+            // Handle subtitle file
             if (episode.subtitle_file) {
                 formData.append(`episodes[${index}][subtitle_file]`, episode.subtitle_file);
             }
@@ -37,13 +41,34 @@ export default function AddEpisodes({ anime }) {
 
         post(route('uploader.anime.episodes.store', anime.id), {
             forceFormData: true,
-            data: formData
+            data: formData,
+            onSuccess: () => {
+                // Clear the form after successful submission
+                setEpisodes([{
+                    title: '',
+                    description: '',
+                    video_file: null,
+                    season: 1,
+                    episode_number: anime.episodes.length + 1,
+                    language: 'japanese',
+                    subtitle_file: null
+                }]);
+            }
         });
     };
 
     const handleEpisodeChange = (index, field, value) => {
         const newEpisodes = [...episodes];
-        newEpisodes[index] = { ...newEpisodes[index], [field]: value };
+        let processedValue = value;
+
+        // Handle numeric fields
+        if (field === 'season' || field === 'episode_number') {
+            // Convert to number and handle empty/invalid input
+            const numValue = parseInt(value);
+            processedValue = isNaN(numValue) ? 1 : numValue;
+        }
+
+        newEpisodes[index] = { ...newEpisodes[index], [field]: processedValue };
         setEpisodes(newEpisodes);
         setData('episodes', newEpisodes);
     };
@@ -140,8 +165,8 @@ export default function AddEpisodes({ anime }) {
                                                             <label className="block text-sm font-medium text-gray-700">Season</label>
                                                             <input
                                                                 type="number"
-                                                                value={episode.season}
-                                                                onChange={e => handleEpisodeChange(index, 'season', parseInt(e.target.value))}
+                                                                value={episode.season || 1}
+                                                                onChange={e => handleEpisodeChange(index, 'season', e.target.value)}
                                                                 min="1"
                                                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                                             />
@@ -151,8 +176,8 @@ export default function AddEpisodes({ anime }) {
                                                             <label className="block text-sm font-medium text-gray-700">Episode Number</label>
                                                             <input
                                                                 type="number"
-                                                                value={episode.episode_number}
-                                                                onChange={e => handleEpisodeChange(index, 'episode_number', parseInt(e.target.value))}
+                                                                value={episode.episode_number || 1}
+                                                                onChange={e => handleEpisodeChange(index, 'episode_number', e.target.value)}
                                                                 min="1"
                                                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                                             />

@@ -10,7 +10,7 @@ class Subtitle extends Model
     protected $fillable = [
         'episode_id',
         'language',
-        'file_url'
+        'file_path'
     ];
 
     public function episode(): BelongsTo

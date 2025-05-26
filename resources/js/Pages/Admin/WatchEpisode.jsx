@@ -15,11 +15,11 @@ export default function WatchEpisode({ episode }) {
     const { post, processing } = useForm();
 
     useEffect(() => {
-        // Log the video URL for debugging
-        console.log('Video URL:', episode.video_url);
-        console.log('Video File:', episode.video_file);
+        // Debug logging for episode data
+        console.log('Episode data:', episode);
+        console.log('Subtitles:', episode.subtitles);
 
-        // Initialize Plyr
+        // Initialize Plyr with enhanced subtitle configuration
         const player = new Plyr(videoRef.current, {
             controls: [
                 'play-large',
@@ -34,6 +34,12 @@ export default function WatchEpisode({ episode }) {
                 'airplay',
                 'fullscreen'
             ],
+            captions: {
+                active: true,
+                language: 'auto',
+                update: true,
+                available: episode.subtitles?.map(sub => sub.language) || []
+            },
             quality: {
                 default: 720,
                 options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]
@@ -42,6 +48,11 @@ export default function WatchEpisode({ episode }) {
 
         playerRef.current = player;
 
+        // Add subtitle change event listener
+        player.on('languagechange', (event) => {
+            console.log('Subtitle language changed:', event.detail.language);
+        });
+
         // Event listeners
         player.on('timeupdate', () => {
             setCurrentTime(player.currentTime);
@@ -49,6 +60,16 @@ export default function WatchEpisode({ episode }) {
 
         player.on('loadedmetadata', () => {
             setDuration(player.duration);
+            // Log available subtitle tracks
+            const tracks = videoRef.current.textTracks;
+            console.log('Available subtitle tracks:', tracks);
+            for (let i = 0; i < tracks.length; i++) {
+                console.log(`Track ${i}:`, {
+                    label: tracks[i].label,
+                    language: tracks[i].language,
+                    mode: tracks[i].mode
+                });
+            }
         });
 
         player.on('ended', () => {
@@ -138,13 +159,29 @@ export default function WatchEpisode({ episode }) {
                                         <track
                                             key={subtitle.id}
                                             kind="captions"
-                                            src={`/storage/${subtitle.file_path}`}
+                                            src={route('subtitles.stream', subtitle.id)}
                                             srcLang={subtitle.language}
                                             label={subtitle.language === 'japanese' ? 'Japanese' : 'English'}
+                                            default={subtitle.language === 'english'}
                                         />
                                     ))}
                                 </video>
                             </div>
+
+                            {/* Add subtitle debug info */}
+                            {episode.subtitles && episode.subtitles.length > 0 && (
+                                <div className="mt-4 p-4 bg-gray-100 rounded">
+                                    <h3 className="font-semibold mb-2">Available Subtitles:</h3>
+                                    <ul className="list-disc list-inside">
+                                        {episode.subtitles.map((subtitle) => (
+                                            <li key={subtitle.id}>
+                                                {subtitle.language === 'japanese' ? 'Japanese' : 'English'} 
+                                                ({subtitle.language})
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
 
                             <div className="flex justify-between items-center mb-6">
                                 <div className="text-sm text-gray-600">

@@ -63,4 +63,19 @@ class SubtitleController extends Controller
         $subtitle->delete();
         return response()->json(null, 204);
     }
+
+    public function stream(Subtitle $subtitle)
+    {
+        $path = storage_path('app/public/' . $subtitle->file_path);
+        
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path, [
+            'Content-Type' => 'text/vtt',
+            'Content-Disposition' => 'inline; filename="' . basename($path) . '"',
+            'Access-Control-Allow-Origin' => '*'
+        ]);
+    }
 }
