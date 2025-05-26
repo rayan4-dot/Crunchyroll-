@@ -114,4 +114,8 @@ Route::middleware(['auth', 'role:uploader'])->prefix('uploader')->name('uploader
     Route::post('/anime/{anime}/episodes', [\App\Http\Controllers\Uploader\AnimeController::class, 'storeEpisodes'])->name('anime.episodes.store');
 });
 
+// Video streaming route
+Route::get('/episodes/{episode}/stream', [App\Http\Controllers\EpisodeController::class, 'stream'])
+    ->name('episodes.stream');
+
 require __DIR__.'/auth.php';

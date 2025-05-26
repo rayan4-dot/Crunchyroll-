@@ -131,7 +131,7 @@ export default function WatchEpisode({ episode }) {
                                     playsInline
                                 >
                                     <source
-                                        src={`/storage/${episode.video_file}`}
+                                        src={route('episodes.stream', episode.id)}
                                         type="video/mp4"
                                     />
                                     {episode.subtitles && episode.subtitles.map((subtitle) => (

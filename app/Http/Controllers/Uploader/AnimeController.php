@@ -45,7 +45,7 @@ class AnimeController extends Controller
                     'required',
                     'file',
                     'mimes:mp4,mkv,avi',
-                    'max:512000' // 500MB max per video file
+                    'max:5120000000000' // 500MB max per video file
                 ],
                 'episodes.*.subtitle_file' => [
                     'nullable',
